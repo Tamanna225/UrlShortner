@@ -13,7 +13,7 @@ RUN chmod +x mvnw
 RUN ./mvnw clean package -DskipTests
 
 # Second stage: Create a lightweight runtime image
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:21
 
 WORKDIR /app
 
