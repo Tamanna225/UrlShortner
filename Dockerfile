@@ -1,20 +1,27 @@
-# Use a lightweight OpenJDK 17 runtime
-FROM openjdk:17-jdk-slim
+# First stage: Build the application
+FROM openjdk:17-jdk-slim AS builder
 
-# Set working directory inside the container
 WORKDIR /app
 
-# Copy the project files into the container
+# Copy all project files
 COPY . .
 
-# Build the application using Maven
-RUN ./mvnw clean package
+# Ensure the mvnw script has execution permissions
+RUN chmod +x mvnw
 
-# Copy the generated JAR file into the container
-COPY target/shrtcut-0.0.1-SNAPSHOT.jar app.jar
+# Build the application
+RUN ./mvnw clean package -DskipTests
+
+# Second stage: Create a lightweight runtime image
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+# Copy only the built JAR from the first stage
+COPY --from=builder /app/target/shrtcut-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose the application port
 EXPOSE 8085
 
-# Command to run the Spring Boot application
+# Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
