@@ -5,6 +5,6 @@ import com.shrtcut.shrtcut.model.UrlMapping;
 
 public class UrlMapper {
     public static UrlResponseDto toDto(UrlMapping urlMapping) {
-        return new UrlResponseDto("http://localhost:8085/r/" + urlMapping.getShortCode());
+        return new UrlResponseDto("https://urlshortner-0h6z.onrender.com/r/" + urlMapping.getShortCode());
     }
 }
