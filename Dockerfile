@@ -1,17 +1,17 @@
 # Use an official OpenJDK runtime as a parent image
-FROM eclipse-temurin:17-jdk
+FROM eclipse-temurin:21-jdk
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /shrtcut
 
 # Argument for the JAR file (use correct name)
-ARG JAR_FILE=target/my-app.jar
+ARG JAR_FILE=target/shrtcut.jar
 
 # Copy the JAR file to the container
-COPY ${JAR_FILE} app.jar
+COPY ${JAR_FILE} shrtcut.jar
 
 # Expose the application's port
 EXPOSE 8085
 
 # Run the Spring Boot application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "shrtcut.jar"]
